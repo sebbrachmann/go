@@ -1,4 +1,4 @@
-name: build golang container image and publish it to package registry
+name: build & publish
 
 on:
   push:
