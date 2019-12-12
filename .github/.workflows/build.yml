@@ -1,0 +1,27 @@
+name: build golang container image and publish it to package registry
+
+on:
+  push:
+    paths:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull source
+        uses: actions/checkout@v1
+  
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(cat VERSION)
+  
+      - name: Publish Docker Image to Github Package Repository
+        uses: machine-learning-apps/gpr-docker-publish@master
+        id: docker
+        with:
+          IMAGE_NAME: go
+          TAG: ${{ steps.get_version.outputs.VERSION }}
+          DOCKERFILE_PATH: ./Dockerfile
+          BUILD_CONTEXT: ./
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
