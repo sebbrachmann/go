@@ -2,8 +2,8 @@ name: build & publish
 
 on:
   push:
-    paths:
-      - '*'
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
